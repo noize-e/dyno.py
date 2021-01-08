@@ -61,13 +61,13 @@ Lets put a single item in an DynamoDB table.
 Create an Item instance and pass the attributes as named arguments (keyworded variables):
 
 ```python
-from nosql.dynamodb.interface import Client, Table
+from nosql.dynamodb.interface import Table
 from nosql.dynamodb.item import SingleItem
 import uuid
 
 
 item = SingleItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
-response = Table(TableName).put(item)
+response = Table("Table-Name").put(item)
 
 if response.ok:
     print("Item saved", item.data())
