@@ -1,8 +1,10 @@
-# PyARC
+PyARC
+=====
 
-## Module Whiterose
+Whiterose, a Date&Time Toolkit
+------------------------------
 
-Date & time toolkit module.
+A date & time functions and classes toolkit.
 
 ### localtime()
 
@@ -54,11 +56,36 @@ time.struct_time(...)
 '2020/12/18'
 ```
 
-## Module DynamoDB
+DynamoDB Facade Interface
+-------------------------
 
-Lets put a single item in an DynamoDB table.
+### Usage
 
-Create an Item instance and pass the attributes as named arguments (keyworded variables):
+#### PutItem Operation
+
+Assuming the DynamoDB table is already created and following a __SingleTable__ design model schema lets put a new item, defining a mixed primary key with an extra attribute. The attributes can be passed as named arguments (keyworded variables) or a dictionary as `**kwargs` argument.
+
+By default the key name __pk__ is used for the partition key value and __sk__ for the sort key.
+
+```python
+from nosql.dynamodb.item import SingleItem
+import uuid
+
+
+item = SingleItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
+```
+
+Now lets import and create a new Table class intance, it receives the table name already created in DynamoDB. Then call the __put()__ passing to it the item created.
+
+```python
+from nosql.dynamodb.interface import Table
+
+...
+response = Table('{Your-Table}').put(item)
+```
+
+And thats it, you had put a new item. Validate if the request was successful by calling the __ok__ property from the response object. The full code block should look like this:
+
 
 ```python
 from nosql.dynamodb.interface import Table
@@ -67,11 +94,25 @@ import uuid
 
 
 item = SingleItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
-response = Table("Table-Name").put(item)
+response = Table('{Your-Table}').put(item)
 
 if response.ok:
     print("Item saved", item.data())
 else:
     print("Error: Item couldn't be saved")
+```
+
+#### Safe PutItem Operation
+
+The facade provides the SecureItem class to prevent _PutItem_ operation overwrites. The implementation its the same as the previous one, just you need to replaces the SingleItem class.
+
+```python
+from nosql.dynamodb.interface import Table
+from nosql.dynamodb.item import SecureItem
+import uuid
+
+
+item = SecureItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
+response = Table('{Your-Table}').put(item)
 ```
 
