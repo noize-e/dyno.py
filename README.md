@@ -1,6 +1,19 @@
 PyARC
 =====
 
+* [Whiterose, a Date&Time Toolkit](#whiterose--a-date-time-toolkit)
+    + [localtime()](#localtime--)
+    + [today()](#today--)
+    + [Unix Timestamps Toolkit](#unix-timestamps-toolkit)
+        * [Epoch.dump()](#epochdump--)
+        * [Epoch.load()](#epochload--)
+        * [Epoch.now()](#epochnow--)
+        * [Epoch.strfload()](#epochstrfload--)
+* [DynamoDB Facade Interface](#dynamodb-facade-interface)
+    + [Usage](#usage)
+      - [PutItem Operation](#putitem-operation)
+      - [Safe PutItem Operation](#safe-putitem-operation)
+
 Whiterose, a Date&Time Toolkit
 ------------------------------
 
