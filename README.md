@@ -76,9 +76,7 @@ DynamoDB Facade Interface
 
 #### PutItem Operation
 
-Assuming the DynamoDB table is already created and following a __SingleTable__ design model schema lets put a new item, defining a mixed primary key with an extra attribute. The attributes can be passed as named arguments (keyworded variables) or a dictionary as `**kwargs` argument.
-
-By default the key name __pk__ is used for the partition key value and __sk__ for the sort key.
+For this example create a new DynamoDB table following a __SingleTable__ design model schema. Define the partition key as `pk` and the sort key as `sk`. Once done, open up your fav IDE and code the following
 
 ```python
 from nosql.dynamodb.item import SingleItem
@@ -88,7 +86,9 @@ import uuid
 item = SingleItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
 ```
 
-Now lets import and create a new Table class intance, it receives the table name already created in DynamoDB. Then call the __put()__ passing to it the item created.
+What we have done here is, crete a SingleItem instance which basically receives the new item attributes as named arguments (keyworded variables), also can be passed as `**kwargs` inside a  dictionary.
+
+Now lets import the Table class and create a new instance. It receives the table name that we have already created. Then call its method __`put()`__ passing the SingleItem instance.
 
 ```python
 from nosql.dynamodb.interface import Table
