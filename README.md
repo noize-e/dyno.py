@@ -1,5 +1,5 @@
-PyARC
-=====
+ARC
+===
 
 * [Whiterose, a Date&Time Toolkit](#whiterose--a-date-time-toolkit)
     + [localtime()](#localtime--)
