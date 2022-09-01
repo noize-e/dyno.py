@@ -1,7 +1,7 @@
 DyPy  
 ---
 
-An AWS DynamoDB utilities python package.   
+DynamoDB utilities python package.   
 
 - [Boto3 DynamoDB Client Facade](#boto3-dynamodb-client-facade)
 - [Dump/load JSON <-> DynamoDB-JSON](#dump-load-json-dynamodb-json)
