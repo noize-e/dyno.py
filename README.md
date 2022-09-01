@@ -75,35 +75,32 @@ response = Table('{Your-Table}').put(item)
 Usage
 
 ```bash 
-root@root: ./dypy $ ./bin/dynamojson --dump 'file-to-parse.json' 'dynamodb-table-name' 
+root@root: ./dypy $ ./bin/dynamojson --dump 'stations.json' 'RadioStation' 
 ```
 
-__Input JSON file__:
+__Input: stations.json__:
 
 ```json
 [
   {
     "uid": 1,
-    "salt": "$2B$12$......",
+    "salt": "$2B$12$Pfsv3Tw6Rakclh/Ustdc3U",
     "media": { 
-      "content": "/media1...m3u8",
+      "content": "/media1/live-radio-session-1.m3u8",
     }
   }
 ]
 ```
 
-__Output__:
+__Output: radiostation.json__:
 
 ```json
 {
-  "TableName": [
+  "RadioStation": [
     {
       "PutRequest": {
         "Item": {
-          "pid": {
-            "N": "2"
-          },
-          "sid": {
+          "uid": {
             "N": "1"
           },
           "salt": {
@@ -115,12 +112,6 @@ __Output__:
                 "S": "/media1/live-radio-session-1.m3u8"
               }
             }
-          },
-          "hour": {
-            "S": "17"
-          },
-          "created_at": {
-            "S": "2019-09-12T22:21:39.828436"
           }
         }
       }
