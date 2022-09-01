@@ -1,0 +1,25 @@
+#!/usr/bin/python3.10
+
+# local imports
+import sys
+import os
+
+# make sure that the current project dir is ../dypy
+sys.path.append(os.getcwd())
+
+import dypy
+
+
+actions = {
+    "dump": dypy.dump_json
+}
+
+
+if __name__ == '__main__':
+    try:
+        action = sys.argv[1]    
+        actions[action]()
+    except KeyError:
+        print("NoActionError")
+
+    

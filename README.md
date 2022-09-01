@@ -1,10 +1,17 @@
-DyPy - A AWS DynamoDB Interface
--------------------------------
+DyPy  
+---
 
-### Dependencies
+An AWS DynamoDB utilities python package.   
+
+- [Boto3 DynamoDB Client Facade](#boto3-dynamodb-client-facade)
+- [Dump/load JSON <-> DynamoDB-JSON](#dump-load-json-dynamodb-json)
+
+## Requirements
 
 - boto3 (`pip install boto3`)
 - whiterose (`git clone https://github.com/noize-e/whiterose`)
+
+## Boto3 DynamoDB Client Facade
 
 ### Usage
 
@@ -61,3 +68,63 @@ item = SecureItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
 response = Table('{Your-Table}').put(item)
 ```
 
+## Dump/load JSON <-> DynamoDB-JSON
+
+## Dump
+
+Usage
+
+```bash 
+root@root: ./dypy $ ./bin/dynamojson --dump 'file-to-parse.json' 'dynamodb-table-name' 
+```
+
+__Input JSON file__:
+
+```json
+[
+  {
+    "uid": 1,
+    "salt": "$2B$12$......",
+    "media": { 
+      "content": "/media1...m3u8",
+    }
+  }
+]
+```
+
+__Output__:
+
+```json
+{
+  "TableName": [
+    {
+      "PutRequest": {
+        "Item": {
+          "pid": {
+            "N": "2"
+          },
+          "sid": {
+            "N": "1"
+          },
+          "salt": {
+            "S": "$2B$12$Pfsv3Tw6Rakclh/Ustdc3U"
+          },
+          "media": {
+            "M": {
+              "content": {
+                "S": "/media1/live-radio-session-1.m3u8"
+              }
+            }
+          },
+          "hour": {
+            "S": "17"
+          },
+          "created_at": {
+            "S": "2019-09-12T22:21:39.828436"
+          }
+        }
+      }
+    }
+  ]
+}
+```
