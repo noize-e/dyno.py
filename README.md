@@ -9,7 +9,7 @@ DynamoDB utilities python package.
 ## Requirements
 
 - boto3 (`pip install boto3`)
-- whiterose (`git clone https://github.com/noize-e/whiterose`)
+- whiterose (`pip install -i https://test.pypi.org/simple/ whiterose==0.9.2`)
 
 ## Boto3 DynamoDB Client Facade
 
