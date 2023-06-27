@@ -1,23 +1,13 @@
-DyPy  
----
+# DyPy
 
-DynamoDB utilities python package.   
+A python client designed to work with AWS DynamoDB following the __SingleTable__ schema model.
 
-- [Boto3 DynamoDB Client Facade](#boto3-dynamodb-client-facade)
-- [Dump/load JSON <-> DynamoDB-JSON](#dump-load-json-dynamodb-json)
 
-## Requirements
+## Ops 
 
-- boto3 (`pip install boto3`)
-- whiterose (`pip install -i https://test.pypi.org/simple/ whiterose==0.9.2`)
+### PutItem
 
-## Boto3 DynamoDB Client Facade
-
-### Usage
-
-#### PutItem Operation
-
-For this example create a new DynamoDB table following a __SingleTable__ design model schema. Define the partition key as `pk` and the sort key as `sk`. Once done, open up your fav IDE and code the following
+This operation requires a partition key and optionally a sort key.
 
 ```python
 from dypy.db import SingleItem
@@ -27,58 +17,45 @@ import uuid
 item = SingleItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
 ```
 
-What we have done here is, crete a SingleItem instance which basically receives the new item attributes as named arguments (keyworded variables), also can be passed as `**kwargs` inside a  dictionary.
+Create a new `Table` instance, call the `put` method passing the `SingleItem` object to execute the operation.
 
-Now lets import the Table class and create a new instance. It receives the table name that we have already created. Then call its method __`put()`__ passing the SingleItem instance.
 
 ```python
-from dypy.db import Table
-
 ...
-response = Table('{Your-Table}').put(item)
+
+response = Table('TableName').put(item)
 ```
 
-And thats it, you had put a new item. Validate if the request was successful by calling the __ok__ property from the response object. The full code block should look like this:
-
+Use the __`ok`__ attribute to validate if the request was successful.
 
 ```python
-from dypy.db import Table, SingleItem
-import uuid
-
-
-item = SingleItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
-response = Table('{Your-Table}').put(item)
+...
 
 if response.ok:
     print("Item saved", item.data())
-else:
-    print("Error: Item couldn't be saved")
 ```
 
-#### Safe PutItem Operation
+### Secure PutItem
 
-The facade provides the SecureItem class to prevent _PutItem_ operation overwrites. The implementation its the same as the previous one, just you need to replaces the SingleItem class.
+The __`SecureItem`__ prevents items overwriting. 
 
 ```python
-from dypy.db import Table, SecureItem
-import uuid
-
+from dypy.db import SecureItem
 
 item = SecureItem(pk='user@email.com', sk=uuid.uuid4().hex, name='Frank')
-response = Table('{Your-Table}').put(item)
+response = Table('TableName').put(item)
 ```
 
-## Dump/load JSON <-> DynamoDB-JSON
+## DynamoDB-JSON Parse
 
-## Dump
+### Convert JSON to DynamoJSON
 
 Usage
 
 ```bash 
-root@root: ./dypy $ ./bin/dynamojson --dump 'stations.json' 'RadioStation' 
+# shell command
+dynamojson --dump 'your.json' 'TableName' 
 ```
-
-__Input: stations.json__:
 
 ```json
 [
@@ -92,11 +69,11 @@ __Input: stations.json__:
 ]
 ```
 
-__Output: radiostation.json__:
+Dump:
 
 ```json
 {
-  "RadioStation": [
+  "TableName": [
     {
       "PutRequest": {
         "Item": {
