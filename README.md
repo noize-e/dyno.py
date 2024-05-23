@@ -1,4 +1,4 @@
-# DyPy
+# Dyno.py
 
 A python client designed to work with AWS DynamoDB following the __SingleTable__ schema model.
 
